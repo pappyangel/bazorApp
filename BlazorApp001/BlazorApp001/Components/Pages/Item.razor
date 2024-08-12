@@ -1,7 +1,55 @@
 @page "/Item"
+@rendermode InteractiveServer
 
 <PageTitle>Add an Item</PageTitle>
 
 <h1>Add the details of your Item</h1>
 
 Item details will be displayed here.
+
+<EditForm Enhance FormName="EditItemDetail" Model="@item" OnSubmit="HandleValidSubmit">
+ <div>
+        <label for="itemId">Item ID:</label>
+        <InputNumber id="itemId" @bind-Value="item.ItemId" />
+    </div>
+ <button type="submit">Submit</button>
+ </EditForm>
+
+
+
+@code {
+    private ItemClass item = new ItemClass();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine($"Item ID: {item.ItemId}");
+        Console.WriteLine($"Item Name: {item.ItemName}");
+        Console.WriteLine($"Item Price: {item.ItemPrice}");
+        Console.WriteLine($"Item Rating: {item.ItemRating}");
+        Console.WriteLine($"Item Image: {item.ItemImage}");
+        Console.WriteLine($"Item Date: {item.ItemDate}");
+    }
+
+    public class ItemClass
+    {
+        public int ItemId { get; set; }
+        public string? ItemName { get; set; }
+        public decimal ItemPrice { get; set; }
+        public int ItemRating { get; set; }
+        public string? ItemImage { get; set; }
+        public DateTime ItemDate { get; set; }
+    }
+
+     protected override  void OnInitialized()
+        {
+            item = new ItemClass
+            {
+                ItemId = 0,
+                ItemName = string.Empty,
+                ItemPrice = 0,
+                ItemRating = 0,
+                ItemImage = string.Empty,
+                ItemDate = DateTime.UtcNow
+            };
+            }
+}
